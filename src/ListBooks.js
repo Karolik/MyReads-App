@@ -41,22 +41,6 @@ class ListBooks extends Component {
 
   render() {
     const { books } = this.props
-    //const { onDeleteBook } = this.props
-    //const { query } = this.state
-
-    //For search results,search page:
-    //let showingBooks
-    //showingBooks = books
-    //if (query) {
-    //  const match = new RegExp(escapeRegExp(query), 'i')
-     // const match = new RegExp((query), 'i')
-      //!! REMOVE It should first show the books - it filters but doesn't show any books before.
-     // showingBooks = books.filter((book) => match.test(book.title))
-    //} else {
-    //  showingBooks = books
-    //}
-
-    //showingBooks.sort(sortBy('name')) 
 
     return (
       <div className="app">
@@ -64,12 +48,6 @@ class ListBooks extends Component {
           <div>
             <Search
               books={this.state.books}
-              /*
-                onCreateContact={(contact) => {
-                this.createContact(contact)
-                history.push('/')
-              }}
-              */
             />
           </div>
         )}/>
@@ -103,7 +81,6 @@ class ListBooks extends Component {
             <div className="open-search">
               <Link
                 to='/search'
-                //onClick={() => this.setState({ showSearchPage: true })}
                 >Add a book</Link>
             </div>
           </div>
