@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+//import Bookshelf from './Bookshelf'
+import PropTypes from 'prop-types'
 
 class Search extends Component {
-    //ADDED
     state = {
         query: ''
       }
-    //ADDED
+    static propTypes = {
+    books: PropTypes.array.isRequired,
+    //onDeleteBook: PropTypes.func.isRequired
+    }
+
     updateQuery = (query) => {
         this.setState({ query: query.trim() })
       }
     
     render() {
-        //ADDED
+        const { books, onDeleteBook } = this.props
         const { query } = this.state
 
-        //ADDED For search results,search page:
         let showingBooks
         if (query) {
         //const match = new RegExp(escapeRegExp(query), 'i')
@@ -27,7 +32,7 @@ class Search extends Component {
         return (
         <div className="search-books">
             <div className="search-books-bar">
-            <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+            <Link to='/' className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</Link>
             <div className="search-books-input-wrapper">
             {/*
                 NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -48,7 +53,8 @@ class Search extends Component {
             </div>
             </div>
             <div className="search-books-results">
-                <ol className="books-grid"></ol>
+                <ol className="books-grid">
+                </ol>
             </div>
         </div>
         )
