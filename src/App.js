@@ -6,7 +6,11 @@ import './App.css'
 class BooksApp extends Component {
   state = {
     books: [],
-    shelf: ['read', 'currentlyReading', 'toRead'],
+    //screen: 'list',
+    shelves: ['read', 'currentlyReading', 'toRead'],
+    read: [],
+    currentlyReading: [],
+    toRead: [],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -21,18 +25,25 @@ class BooksApp extends Component {
     this.setState((state) => ({
       books: state.books.filter((b) => b.id !== book.id)
     }))
-
-  //Update the position of the book in the shelves
-  /*updateBook = (book) => {
-  }*/
   }
+  /*
+    componentDidMount(){
+    BooksAPI.update(book, shelf).then((book) => {
+      shelf: state.shelf.concat([ book ])
+    })
+    }
+  }
+  */
 
   render() {
     return (
       <div>
+        {//this.state.screen === "list"
+        }
         <ListBooks    
         onDeleteBook={this.removeBook}
         books={this.state.books}
+        read={this.state.read}
         //shelf={this.state.shelf}
         //onUpdate={() => {this.setState({shelf:'read'}) }} 
         />
