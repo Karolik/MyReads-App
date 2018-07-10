@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
-//import escapeRegExp from 'escape-string-regexp'
-//import sortBy from 'sort-by'
+import escapeRegExp from 'escape-string-regexp'
 import Bookshelf from './Bookshelf'
 import Search from './Search'
 import * as BooksAPI from './BooksAPI'
@@ -16,7 +15,20 @@ class ListBooks extends Component {
   
   state = {
     books: [],
-    query: ''
+    shelf: ['read', 'currentlyReading', 'toRead'],
+    read: [],
+    currentlyReading: [],
+    toRead: [],
+    query: '',
+    //For the select onChange function
+    getInitialState: function() {
+      return {
+          value: 'select'
+      }
+    },
+    change: function(event){
+      this.setState({value: event.target.value});
+    }
   }
 
   componentDidMount() {
@@ -39,8 +51,32 @@ class ListBooks extends Component {
     }))
   }
 
+  addToRead(book) {
+    BooksAPI.update(book).then(book => {
+      this.setState(state => ({
+        read: state.read.concat([ book])
+      }))
+    })
+  }
+
   render() {
     const { books } = this.props
+    //const { onDeleteBook } = this.props
+    const { query } = this.state
+
+    //For search results,search page:
+    let showingBooks
+    //showingBooks = books
+    if (query) {
+    const match = new RegExp(escapeRegExp(query), 'i')
+     // const match = new RegExp((query), 'i')
+      //!! REMOVE It should first show the books - it filters but doesn't show any books before.
+    showingBooks = books.filter((book) => match.test(book.title))
+    } else {
+      showingBooks = books
+    }
+
+    //showingBooks.sort(sortBy('name')) 
 
     return (
       <div className="app">
@@ -48,6 +84,12 @@ class ListBooks extends Component {
           <div>
             <Search
               books={this.state.books}
+              /*
+                onCreateContact={(contact) => {
+                this.createContact(contact)
+                history.push('/')
+              }}
+              */
             />
           </div>
         )}/>
@@ -74,13 +116,19 @@ class ListBooks extends Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <Bookshelf    
                   onDeleteBook={this.removeBook}
-                  books={this.state.books} />
+                  books={this.state.books}
+                  read={this.state.read}
+                  onRead={(book) => {
+                    this.addToRead(book)
+                    //history.push('/')
+                  }} />
                 </div>
               </div>
             </div>
             <div className="open-search">
               <Link
                 to='/search'
+                //onClick={() => this.setState({ showSearchPage: true })}
                 >Add a book</Link>
             </div>
           </div>
