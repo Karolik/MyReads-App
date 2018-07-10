@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-//import Bookshelf from './Bookshelf'
+import Bookshelf from './Bookshelf'
 import PropTypes from 'prop-types'
+import escapeRegExp from 'escape-string-regexp'
+import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
     state = {
+        books: [],
         query: ''
       }
     static propTypes = {
@@ -12,9 +15,22 @@ class Search extends Component {
     //onDeleteBook: PropTypes.func.isRequired
     }
 
+    componentDidMount() {
+        BooksAPI.getAll().then((books) => {
+          this.setState({ books })
+        })
+    }
+
     updateQuery = (query) => {
         this.setState({ query: query.trim() })
-      }
+    }
+
+    /*Search books
+    componentDidMount() {
+        BooksAPI.search().then((books) => {
+            this.setState({ books })
+          })
+    } */
     
     render() {
         const { books, onDeleteBook } = this.props
@@ -22,9 +38,8 @@ class Search extends Component {
 
         let showingBooks
         if (query) {
-        //const match = new RegExp(escapeRegExp(query), 'i')
-        const match = new RegExp((query), 'i')
-        showingBooks = books.filter((book) => match.test(book.name))
+        const match = new RegExp(escapeRegExp(query), 'i')
+        showingBooks = books.filter((book) => match.test(book.title, book.authors))
         } else {
         showingBooks = books
         }
@@ -45,7 +60,6 @@ class Search extends Component {
             <input 
             type="text" 
             placeholder="Search by title or author"
-            //ADDED 2 lines:
             value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
             />
@@ -54,6 +68,9 @@ class Search extends Component {
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
+                <Bookshelf    
+                  onDeleteBook={this.removeBook}
+                  books={this.state.books} />
                 </ol>
             </div>
         </div>
