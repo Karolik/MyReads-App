@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import escapeRegExp from 'escape-string-regexp'
+//import escapeRegExp from 'escape-string-regexp'
 import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 
@@ -42,12 +42,13 @@ class Bookshelf extends Component {
   }
 
   render() {
-    const { books, onDeleteBook } = this.props
+    const { books } = this.props
 
     return(
       <div className="bookshelf-books">
         <ol className="books-grid">
           <Book  
+            onChange={this.changeShelf}
             onDeleteBook={this.removeBook}
             books={this.state.books} />
         </ol>
