@@ -48,7 +48,7 @@ class Bookshelf extends Component {
       <div className="bookshelf-books">
         <ol className="books-grid">
           <Book  
-            onChange={this.changeShelf}
+            onChangeShelf={this.changeShelf}
             onDeleteBook={this.removeBook}
             books={this.state.books} />
         </ol>
