@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom'
 import ListBooks from './ListBooks'
 import Search from './Search'
 import './App.css'
 
-class BooksApp extends Component {
-  render() {
+function BooksApp(props) {
     return (
       <div className="app">
         {//this.state.screen === "list"
@@ -37,6 +36,5 @@ class BooksApp extends Component {
       </div>
     )
   }
-}
 
 export default BooksApp;
