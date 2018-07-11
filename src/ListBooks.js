@@ -7,7 +7,7 @@ import * as BooksAPI from './BooksAPI'
 class ListBooks extends Component {
   state = {
     books: [],
-    shelf: ['read', 'currentlyReading', 'toRead'],
+    shelf: ['Currently Reading', 'Want To Read', 'Read'],
     read: [],
     currentlyReading: [],
     toRead: [],
@@ -49,7 +49,7 @@ class ListBooks extends Component {
   }*/
 
   //EMO:
-  filterBook(searchText, maxResults) { (book) => {
+  /*filterBook(searchText, maxResults) { (book) => {
     this.setState((state) => ({
       books: state.books.filter(book => {
         if (book.title.toLowerCase().includes(searchText.toLowerCase())) {
@@ -64,7 +64,7 @@ class ListBooks extends Component {
     })
     )
   }
-}
+}*/
   //EMO:
   /*handleSearchChange = event => {
     this.setState({
@@ -121,23 +121,23 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
             <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
+              <h2 className="bookshelf-title">{this.state.shelf[0]}</h2>
               <Bookshelf    
-              onChange={this.changeShelf}
+              onChangeShelf={this.changeShelf}
               onDeleteBook={this.removeBook}
               books={this.state.books} />
             </div>
             <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
+              <h2 className="bookshelf-title">{this.state.shelf[1]}</h2>
               <Bookshelf    
-              onChange={this.changeShelf}
+              onChangeShelf={this.changeShelf}
               onDeleteBook={this.removeBook}
               books={this.state.books} />
             </div>
             <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
+              <h2 className="bookshelf-title">{this.state.shelf[2]}</h2>
               <Bookshelf  
-              onChange={this.changeShelf}  
+              onChangeShelf={this.changeShelf}  
               onDeleteBook={this.removeBook}
               books={this.state.books}
               read={this.state.read}
