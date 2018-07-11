@@ -7,29 +7,15 @@ import './App.css'
 function BooksApp(props) {
     return (
       <div className="app">
-        {//this.state.screen === "list"
-        }
         <Route path='/search' render={({ history }) => (
           <div>
             <Search
-              //books={this.state.books}
-              //textChange={this.handleSearchChange}
-              /*
-                onCreateContact={(contact) => {
-                this.createContact(contact)
-                history.push('/')
-              }} */
             />
           </div>
         )}/>
         <Route exact path='/' render={() => (
           <div className="list-books">
-            <ListBooks    
-              //onDeleteBook={this.removeBook}
-              //books={this.state.books}
-              //read={this.state.read}
-              //shelf={this.state.shelf}
-              //onUpdate={() => {this.setState({shelf:'read'}) }} 
+            <ListBooks
               />
           </div>
         )}/>
