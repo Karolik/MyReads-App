@@ -27,19 +27,6 @@ class ListBooks extends Component {
   }
 
   render() {
-    //const { books } = this.props
-    //const { query } = this.state
-
-    /** Filter books into categories */
-    //let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
-
-    /*if (query) {
-      const match = new RegExp(escapeRegExp(query), 'i')
-      currentlyReadingBooks = books.filter((book) => match.test(book.shelf))
-    } else {
-      currentlyReadingBooks = books
-    } */
-
 
     return (
       <div>
@@ -68,9 +55,9 @@ class ListBooks extends Component {
             <div className="bookshelf">
               <h2 className="bookshelf-title">{this.state.shelf[2]}</h2>
               <Bookshelf  
+              books={this.state.read}
               onChangeShelf={this.changeShelf}  
               onDeleteBook={this.removeBook}
-              books={this.state.read}
               onRead={(book) => {
                 this.addToRead(book)
                 //history.push('/')
