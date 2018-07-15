@@ -52,7 +52,7 @@ class ListBooks extends Component {
               <h2 className="bookshelf-title">{this.state.shelf[0]}</h2>
               <Bookshelf    
               title = {'Currently Reading'} 
-              onChangeShelf={this.changeShelf}
+              changeShelf={this.changeShelf} 
               onDeleteBook={this.removeBook}
               books={this.state.currentlyReading}
               value={this.state.value} />
@@ -61,7 +61,7 @@ class ListBooks extends Component {
               <h2 className="bookshelf-title">{this.state.shelf[1]}</h2>
               <Bookshelf  
               title = {'Want To Read'} 
-              onChangeShelf={this.changeShelf}
+              changeShelf={this.changeShelf} 
               onDeleteBook={this.removeBook}
               books={this.state.wantToRead} 
               value={this.state.value}
@@ -71,7 +71,7 @@ class ListBooks extends Component {
               <h2 className="bookshelf-title">{this.state.shelf[2]}</h2>
               <Bookshelf  
               title = {'Read'}
-              onChangeShelf={this.changeShelf}  
+              changeShelf={this.changeShelf}   
               onDeleteBook={this.removeBook}
               books={this.state.read}
               value={this.state.value}
