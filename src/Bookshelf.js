@@ -6,11 +6,11 @@ const Bookshelf = (props) => {
     <div className="bookshelf-books">
       <ol className="books-grid">
       {props.books.map((book, index) =>
-        <Book  
+        <Book
           key={index}
           book={book}
-          //value={this.value}
-          onChangeShelf={this.changeShelf}
+          //value={this.props.value}
+          changeShelf={props.changeShelf}
           onDeleteBook={this.removeBook}
           //books={this.props.books} 
           />
