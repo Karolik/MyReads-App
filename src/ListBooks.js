@@ -11,23 +11,36 @@ class ListBooks extends Component {
     currentlyReading: [],
     wantToRead: [],
     query: '',
+    value: ''
   }
 
   /** Fetch the data from the database BooksAPI.js and filter the books into 3 categories*/
-  componentDidMount() {
+  getAllBooks(){
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
       let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
-      this.setState({currentlyReading});
       let wantToRead = books.filter((book) => (book.shelf === "wantToRead"));
-      this.setState({wantToRead});
       let read = books.filter((book) => (book.shelf === "read"));
-      this.setState({read}); 
+      this.setState({read});
+      this.setState({currentlyReading, wantToRead, read});
     })
   }
 
-  render() {
+  componentDidMount() {
+    this.getAllBooks()
+  }
 
+  /** Change the shelf */
+  changeShelf = (book,shelf) =>
+    BooksAPI.update(book, shelf).then((books) => {
+      this.getAllBooks() 
+  })
+
+  componentDidUpdate() {
+    changeShelf()
+  }
+
+  render() {
     return (
       <div>
         <div className="list-books-title">
@@ -41,7 +54,8 @@ class ListBooks extends Component {
               title = {'Currently Reading'} 
               onChangeShelf={this.changeShelf}
               onDeleteBook={this.removeBook}
-              books={this.state.currentlyReading} />
+              books={this.state.currentlyReading}
+              value={this.state.value} />
             </div>
             <div className="bookshelf">
               <h2 className="bookshelf-title">{this.state.shelf[1]}</h2>
@@ -50,14 +64,17 @@ class ListBooks extends Component {
               onChangeShelf={this.changeShelf}
               onDeleteBook={this.removeBook}
               books={this.state.wantToRead} 
+              value={this.state.value}
               />
             </div>
             <div className="bookshelf">
               <h2 className="bookshelf-title">{this.state.shelf[2]}</h2>
               <Bookshelf  
-              books={this.state.read}
+              title = {'Read'}
               onChangeShelf={this.changeShelf}  
               onDeleteBook={this.removeBook}
+              books={this.state.read}
+              value={this.state.value}
               onRead={(book) => {
                 this.addToRead(book)
                 //history.push('/')
