@@ -36,10 +36,6 @@ class ListBooks extends Component {
       this.getAllBooks() 
   })
 
-  componentDidUpdate() {
-    changeShelf()
-  }
-
   render() {
     return (
       <div>
