@@ -11,9 +11,9 @@ const Book = (props) => {
               }}></div>
               <div className="book-shelf-changer">
                 <select
-            onChange={event => props.onChangeShelf(props.book, event.target.value)}
-            /*value={value} onChange={this.handleChange}*/
-                /*change it onChange={this.handleRead} value={this.state.value}*/ /*onChange={() => ((this.value === "none") ? onDeleteBook(book) : null)}*/>
+                  onChange={event => props.onChangeShelf(props.book, event.target.value)}
+                  value={props.value}
+                >
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
