@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Book from './Book'
-//import Bookshelf from './Bookshelf'
 import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
@@ -29,19 +28,13 @@ class Search extends Component {
         this.getAllBooks()
       }
 
-    /** Search the books  */
-    /*searchBooks = (query) => {
-        BooksAPI.search(query).then(books => {
-            this.getAllBooks()
-        })
-    }*/
-
     /** Change the shelf */
     changeShelf = (book,shelf) =>
         BooksAPI.update(book, shelf).then((books) => {
             this.getAllBooks() 
     })
 
+    /** Search the books  */
     searchBooks = (query) => {
         this.setState({ query: query.trim() })
         BooksAPI.search(query, 20).then(query => {
@@ -49,6 +42,12 @@ class Search extends Component {
             console.log(query);
         })
     }
+    
+    /*searchBooks = (query) => {
+        BooksAPI.search(query).then(books => {
+            this.getAllBooks()
+        })
+    }*/
 
     /** trim() - remove whitespace from both sides of a string */
     /*updateQuery = (query) => {
@@ -71,14 +70,6 @@ class Search extends Component {
         } else {
             showingBooks = books
         }
-
-        /*if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i')
-            showingBooks = books.filter((book) => match.test(book.title, book.authors))
-            //showingBooks = getAllBooks((book) => match.test(book.title, book.authors))
-        } else {
-            showingBooks = books
-        }*/
 
         return (
         <div className="search-books">
@@ -107,7 +98,6 @@ class Search extends Component {
                     book={book}
                     value={book.shelf}
                     changeShelf={this.changeShelf}
-                    //books={this.props.books} 
                     />
                     )}
                 </ol>
