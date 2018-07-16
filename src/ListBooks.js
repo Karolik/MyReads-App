@@ -5,19 +5,14 @@ import * as BooksAPI from './BooksAPI'
 
 class ListBooks extends Component {
   state = {
-    books: [],
-    shelf: ['Currently Reading', 'Want To Read', 'Read'],
     read: [],
     currentlyReading: [],
     wantToRead: [],
-    query: '',
-    value: ''
   }
 
   /** Fetch the data from the database BooksAPI.js and filter the books into 3 categories*/
   getAllBooks(){
     BooksAPI.getAll().then((books) => {
-      this.setState({ books })
       let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
       let wantToRead = books.filter((book) => (book.shelf === "wantToRead"));
       let read = books.filter((book) => (book.shelf === "read"));
@@ -44,36 +39,28 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
             <div className="bookshelf">
-              <h2 className="bookshelf-title">{this.state.shelf[0]}</h2>
+              <h2 className="bookshelf-title">Currently Reading</h2>
               <Bookshelf    
               title = {'Currently Reading'} 
-              changeShelf={this.changeShelf} 
-              onDeleteBook={this.removeBook}
+              changeShelf={this.changeShelf}
               books={this.state.currentlyReading}
-              value={this.state.value} />
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">{this.state.shelf[1]}</h2>
-              <Bookshelf  
-              title = {'Want To Read'} 
-              changeShelf={this.changeShelf} 
-              onDeleteBook={this.removeBook}
-              books={this.state.wantToRead} 
-              value={this.state.value}
               />
             </div>
             <div className="bookshelf">
-              <h2 className="bookshelf-title">{this.state.shelf[2]}</h2>
+              <h2 className="bookshelf-title">Want to read</h2>
+              <Bookshelf  
+              title = {'Want To Read'} 
+              changeShelf={this.changeShelf}
+              books={this.state.wantToRead}
+              />
+            </div>
+            <div className="bookshelf">
+              <h2 className="bookshelf-title">Read</h2>
               <Bookshelf  
               title = {'Read'}
-              changeShelf={this.changeShelf}   
-              onDeleteBook={this.removeBook}
+              changeShelf={this.changeShelf}
               books={this.state.read}
-              value={this.state.value}
-              onRead={(book) => {
-                this.addToRead(book)
-                //history.push('/')
-              }} />
+              />
             </div>
           </div>
         </div>
