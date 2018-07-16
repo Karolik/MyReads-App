@@ -6,7 +6,6 @@ import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
     state = {
-        books: [],
         read: [],
         currentlyReading: [],
         wantToRead: [],
@@ -60,7 +59,6 @@ class Search extends Component {
     
     render() {
         const { query, foundBooks } = this.state
-        const { books } = this.state
         
         let showingBooks
         if (query) {
@@ -68,7 +66,7 @@ class Search extends Component {
             showingBooks = foundBooks.map((book) => match.test(book.title, book.authors))
             //showingBooks = getAllBooks((book) => match.test(book.title, book.authors))
         } else {      //Show no books
-            showingBooks = books
+            showingBooks = [];
         }
 
         return (
