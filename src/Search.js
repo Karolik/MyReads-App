@@ -1,32 +1,84 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import Bookshelf from './Bookshelf'
+import Book from './Book'
+//import Bookshelf from './Bookshelf'
+import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
     state = {
         books: [],
+        read: [],
+        currentlyReading: [],
+        wantToRead: [],
+        foundBooks: [],
         query: ''
+    }
+    
+    getAllBooks(){
+        BooksAPI.getAll().then((books) => {
+          let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
+          let wantToRead = books.filter((book) => (book.shelf === "wantToRead"));
+          let read = books.filter((book) => (book.shelf === "read"));
+          this.setState({currentlyReading, wantToRead, read});
+        })
       }
 
     //Fetch the data from the database BooksAPI.js
     componentDidMount() {
-        BooksAPI.getAll().then((books) => {
-          this.setState({ books })
+        this.getAllBooks()
+      }
+
+    /** Search the books  */
+    /*searchBooks = (query) => {
+        BooksAPI.search(query).then(books => {
+            this.getAllBooks()
+        })
+    }*/
+
+    /** Change the shelf */
+    changeShelf = (book,shelf) =>
+        BooksAPI.update(book, shelf).then((books) => {
+            this.getAllBooks() 
+    })
+
+    searchBooks = (query) => {
+        this.setState({ query: query.trim() })
+        BooksAPI.search(query, 20).then(query => {
+            this.setState({foundBooks: query}) 
+            console.log(query);
         })
     }
 
     /** trim() - remove whitespace from both sides of a string */
-    updateQuery = (query) => {
+    /*updateQuery = (query) => {
         this.setState({ query: query.trim() })
-    }
+    }*/
     
     clearQuery = () => {
         this.setState({ query: '' })
     }
     
     render() {
-        const { query } = this.state
+        const { query, foundBooks } = this.state
+        const { books } = this.state
+        
+        let showingBooks
+        if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingBooks = foundBooks.map((book) => match.test(book.title, book.authors))
+            //showingBooks = getAllBooks((book) => match.test(book.title, book.authors))
+        } else {
+            showingBooks = books
+        }
+
+        /*if (query) {
+            const match = new RegExp(escapeRegExp(query), 'i')
+            showingBooks = books.filter((book) => match.test(book.title, book.authors))
+            //showingBooks = getAllBooks((book) => match.test(book.title, book.authors))
+        } else {
+            showingBooks = books
+        }*/
 
         return (
         <div className="search-books">
@@ -43,15 +95,21 @@ class Search extends Component {
                     type="text" 
                     placeholder="Search by title or author"
                     value={query}
-                    onChange={(event) => this.updateQuery(event.target.value)}
+                    onChange={(event) => this.searchBooks(event.target.value)}
                     />
                 </div>
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
-                <Bookshelf    
-                  onDeleteBook={this.removeBook}
-                  books={this.state.books} />
+                {showingBooks.map((book, index) =>
+                    <Book
+                    key={index}
+                    book={book}
+                    value={book.shelf}
+                    changeShelf={this.changeShelf}
+                    //books={this.props.books} 
+                    />
+                    )}
                 </ol>
             </div>
         </div>
