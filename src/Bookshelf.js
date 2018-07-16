@@ -9,10 +9,8 @@ const Bookshelf = (props) => {
         <Book
           key={index}
           book={book}
-          //value={this.props.value}
+          value={book.shelf}
           changeShelf={props.changeShelf}
-          onDeleteBook={this.removeBook}
-          //books={this.props.books} 
           />
         )}
       </ol>
