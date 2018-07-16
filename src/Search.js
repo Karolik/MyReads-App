@@ -67,7 +67,7 @@ class Search extends Component {
             const match = new RegExp(escapeRegExp(query), 'i')
             showingBooks = foundBooks.map((book) => match.test(book.title, book.authors))
             //showingBooks = getAllBooks((book) => match.test(book.title, book.authors))
-        } else {
+        } else {      //Show no books
             showingBooks = books
         }
 
