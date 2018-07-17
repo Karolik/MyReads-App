@@ -6,9 +6,8 @@ import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
     state = {
-        read: [],
-        currentlyReading: [],
-        wantToRead: [],
+        books: [],
+        //libraryBooks: [],
         foundBooks: [],
         query: ''
     }
@@ -35,20 +34,16 @@ class Search extends Component {
 
     /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query.trim() })
+        this.setState({ query: query.trim() }       /** trim() - remove whitespace from both sides of a string */
         BooksAPI.search(query, 20).then(query => {
-            this.setState({foundBooks: query}) 
+            this.setState({foundBooks: query})
+            this.state.foundBooks.map((foundBook) => (this.state.books.filter((book) => foundBook.id === book.id).map((book) => book.shelf = foundBook.shelf)));
             console.log(query);
+            console.log(this.state.foundBooks);
+            console.log(this.state.books);
         })
     }
-    
-    /*searchBooks = (query) => {
-        BooksAPI.search(query).then(books => {
-            this.getAllBooks()
-        })
-    }*/
 
-    /** trim() - remove whitespace from both sides of a string */
     /*updateQuery = (query) => {
         this.setState({ query: query.trim() })
     }*/
@@ -64,7 +59,6 @@ class Search extends Component {
         if (query) {
             const match = new RegExp(escapeRegExp(query), 'i')
             showingBooks = foundBooks.map((book) => match.test(book.title, book.authors))
-            //showingBooks = getAllBooks((book) => match.test(book.title, book.authors))
         } else {      //Show no books
             showingBooks = [];
         }
