@@ -6,18 +6,18 @@ import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
     state = {
-        books: [],
-        //libraryBooks: [],
+        libraryBooks: [],
         foundBooks: [],
         query: ''
     }
     
     getAllBooks(){
-        BooksAPI.getAll().then((books) => {
-          let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
-          let wantToRead = books.filter((book) => (book.shelf === "wantToRead"));
-          let read = books.filter((book) => (book.shelf === "read"));
-          this.setState({currentlyReading, wantToRead, read});
+        BooksAPI.getAll().then((libraryBooks) => {
+          //let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
+          //let wantToRead = books.filter((book) => (book.shelf === "wantToRead"));
+          //let read = books.filter((book) => (book.shelf === "read"));
+          //this.setState({currentlyReading, wantToRead, read});
+          this.setState({libraryBooks});
         })
       }
 
@@ -28,19 +28,22 @@ class Search extends Component {
 
     /** Change the shelf */
     changeShelf = (book,shelf) =>
-        BooksAPI.update(book, shelf).then((books) => {
+        BooksAPI.update(book, shelf).then((libraryBooks) => {
             this.getAllBooks() 
     })
 
     /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query.trim() }       /** trim() - remove whitespace from both sides of a string */
+        this.setState({ query: query.trim() })       /** trim() - remove whitespace from both sides of a string */
+        
         BooksAPI.search(query, 20).then(query => {
-            this.setState({foundBooks: query})
-            this.state.foundBooks.map((foundBook) => (this.state.books.filter((book) => foundBook.id === book.id).map((book) => book.shelf = foundBook.shelf)));
+            this.setState({foundBooks: query}) 
+            this.state.foundBooks.map ((foundBook) => 
+            (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
+            .map((libraryBook) => (libraryBook.shelf = foundBook.shelf))));
             console.log(query);
             console.log(this.state.foundBooks);
-            console.log(this.state.books);
+            console.log(this.state.libraryBooks);
         })
     }
 
