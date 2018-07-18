@@ -11,17 +11,13 @@ class Search extends Component {
         query: ''
     }
     
+    //Fetch the data from the database BooksAPI.js
     getAllBooks(){
         BooksAPI.getAll().then((libraryBooks) => {
-          //let currentlyReading = books.filter((book) => (book.shelf === "currentlyReading"));
-          //let wantToRead = books.filter((book) => (book.shelf === "wantToRead"));
-          //let read = books.filter((book) => (book.shelf === "read"));
-          //this.setState({currentlyReading, wantToRead, read});
           this.setState({libraryBooks});
         })
       }
 
-    //Fetch the data from the database BooksAPI.js
     componentDidMount() {
         this.getAllBooks()
       }
