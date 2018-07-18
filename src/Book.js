@@ -1,13 +1,14 @@
 import React from 'react';
 
 const Book = (props) => {
+  const bookImage = props.book.imageLinks ? props.book.imageLinks.thumbnail : null;
+  
   return (
     <div className="books-grid">
         <li key={props.book.id}>
           <div className="book">
             <div className="book-top">
-              <div className="book-cover" style={{ width: 128, height: 193,
-                //backgroundImage: `url(${props.book.imageLinks.thumbnail})`
+              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookImage})`
               }}></div>
               <div className="book-shelf-changer">
                 <select
