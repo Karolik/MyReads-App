@@ -32,15 +32,23 @@ class Search extends Component {
             this.getAllBooks() 
     })
 
-    /** Search the books  */
+    /** Search books  */
     searchBooks = (query) => {
-        this.setState({ query: query.trim() })       /** trim() - remove whitespace from both sides of a string */
-        
-        BooksAPI.search(query, 20).then(query => {
-            this.setState({foundBooks: query}) 
-            this.state.foundBooks.map ((foundBook) => 
-            (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
-            .map((libraryBook) => (libraryBook.shelf = foundBook.shelf))));
+        this.setState({ query: query.trim() }       /** trim() - remove whitespace from both sides of a string */
+        BooksAPI.search(query, 20).then(foundBooks => {
+            if(query){
+                const match = new RegExp(escapeRegExp(query), 'i')
+                this.state.foundBooks.map ((foundBook) => match.test(foundBook.title, foundBook.authors ))
+                .map ((foundBook) => 
+                (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
+                .map((libraryBook) => (libraryBook.shelf = foundBook.shelf)))); //For found books that are already on the main page, assign the same shelf
+                //if(foundBooks are not empty)
+                this.setState({foundBooks});
+            }
+            else{
+                this.clearQuery(query);
+                this.setState({foundBooks: []});
+            }
             console.log(query);
             console.log(this.state.foundBooks);
             console.log(this.state.libraryBooks);
@@ -57,14 +65,6 @@ class Search extends Component {
     
     render() {
         const { query, foundBooks } = this.state
-        
-        let showingBooks
-        if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i')
-            showingBooks = foundBooks.map((book) => match.test(book.title, book.authors))
-        } else {      //Show no books
-            showingBooks = [];
-        }
 
         return (
         <div className="search-books">
@@ -87,14 +87,16 @@ class Search extends Component {
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
-                {showingBooks.map((book, index) =>
+                 {(foundBooks.length !== 0) ? (foundBooks.map((book, index) =>
                     <Book
                     key={index}
                     book={book}
                     value={book.shelf}
                     changeShelf={this.changeShelf}
+                    title={this.state.foundBooks.title}
                     />
-                    )}
+                    ))
+                    : null}
                 </ol>
             </div>
         </div>
