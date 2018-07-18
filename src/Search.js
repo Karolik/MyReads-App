@@ -33,6 +33,7 @@ class Search extends Component {
         this.setState({ query: query.trim() }       /** trim() - remove whitespace from both sides of a string */
         BooksAPI.search(query, 20).then(foundBooks => {
             if(!foundBooks.error) {
+            //try{
                 const match = new RegExp(escapeRegExp(query), 'i')
                 this.state.foundBooks.map ((foundBook) => match.test(foundBook.title, foundBook.authors ))
                 //For found books that are already on the main page, assign them the same shelf:
@@ -45,6 +46,7 @@ class Search extends Component {
                     //}
             }
             else {
+            //catch(err){
                 //console.log(foundBooks.error)
                 this.clearQuery(query);
                 this.setState({foundBooks: []});
