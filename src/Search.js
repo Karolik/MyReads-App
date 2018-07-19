@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Book from './Book'
-import escapeRegExp from 'escape-string-regexp'
+//import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
@@ -14,7 +14,7 @@ class Search extends Component {
     //Fetch the data from the database BooksAPI.js
     getAllBooks(){
         BooksAPI.getAll().then((libraryBooks) => {
-          this.setState({libraryBooks});
+            this.setState({libraryBooks});
         })
       }
 
@@ -32,22 +32,22 @@ class Search extends Component {
         this.setState({ query: '' })
     }
 
-    /** Search books  */
+    /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query.trim() })       /** trim() - remove whitespace from both sides of a string */
-        BooksAPI.search(query, 20).then(foundBooks => {
+        this.setState({ query: query })       /** trim() - remove whitespace from both sides of a string */
+        
+        BooksAPI.search(query).then(foundBooks => {
             if(!foundBooks.error) {
             //try{
-                const match = new RegExp(escapeRegExp(query), 'i')
-                this.state.foundBooks.map ((foundBook) => match.test(foundBook.title, foundBook.authors ))
+                //const match = new RegExp(escapeRegExp(query), 'i')
+                //foundBooks.map ((foundBook) => match.test(foundBook.title, foundBook.authors))
                 //For found books that are already on the main page, assign them the same shelf:
-                .map((foundBook) => 
+                foundBooks.map((foundBook) => 
                 (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
-                .map((libraryBook) => (libraryBook.shelf = foundBook.shelf))));
+                .map(libraryBook => (libraryBook.shelf = foundBook.shelf))));
                 this.setState({foundBooks});
                     //if(foundBooks.length === 0){
-                    //    this.clearQuery(query);
-                    //}
+                    //    this.clearQuery(query);}
             }
             else {
             //catch(err){
@@ -60,13 +60,9 @@ class Search extends Component {
         })
     }
 
-    /*updateQuery = (query) => {
-        this.setState({ query: query.trim() })
-    }*/
-    
     render() {
         const { query, foundBooks } = this.state
-
+        
         return (
         <div className="search-books">
             <div className="search-books-bar">
@@ -88,13 +84,12 @@ class Search extends Component {
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
-                 {(foundBooks.length !== 0) ? (foundBooks.map((book, index) =>
+                {(foundBooks.length !== 0) ? (foundBooks.map((book, index) =>
                     <Book
                     key={index}
                     book={book}
                     value={book.shelf}
                     changeShelf={this.changeShelf}
-                    //title={this.state.foundBooks.title}
                     />
                     ))
                     : null}
