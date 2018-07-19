@@ -11,6 +11,7 @@ const Bookshelf = (props) => {
           book={book}
           value={book.shelf}
           changeShelf={props.changeShelf}
+          //books={this.props.books} 
           />
         )}
       </ol>
