@@ -94,7 +94,7 @@ class Search extends Component {
                     book={book}
                     value={book.shelf}
                     changeShelf={this.changeShelf}
-                    title={this.state.foundBooks.title}
+                    //title={this.state.foundBooks.title}
                     />
                     ))
                     : null}
