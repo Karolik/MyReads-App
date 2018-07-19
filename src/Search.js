@@ -35,7 +35,7 @@ class Search extends Component {
     /** Search the books  */
     searchBooks = (query) => {
         this.setState({ query: query })       /** trim() - remove whitespace from both sides of a string */
-        
+
         BooksAPI.search(query).then(foundBooks => {
             if(!foundBooks.error) {
             //try{
