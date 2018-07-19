@@ -2,7 +2,7 @@ import React from 'react';
 
 const Book = (props) => {
   const bookImage = props.book.imageLinks ? props.book.imageLinks.thumbnail : null;
-  
+
   return (
     <div className="books-grid">
         <li key={props.book.id}>
@@ -14,7 +14,7 @@ const Book = (props) => {
                 <select
                   onChange={event => props.changeShelf(props.book, event.target.value)}
                   value={props.value}
-                >
+                  >
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
