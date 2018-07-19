@@ -28,9 +28,13 @@ class Search extends Component {
             this.getAllBooks() 
     })
 
+    clearQuery = () => {
+        this.setState({ query: '' })
+    }
+
     /** Search books  */
     searchBooks = (query) => {
-        this.setState({ query: query.trim() }       /** trim() - remove whitespace from both sides of a string */
+        this.setState({ query: query.trim() })       /** trim() - remove whitespace from both sides of a string */
         BooksAPI.search(query, 20).then(foundBooks => {
             if(!foundBooks.error) {
             //try{
@@ -47,7 +51,6 @@ class Search extends Component {
             }
             else {
             //catch(err){
-                //console.log(foundBooks.error)
                 this.clearQuery(query);
                 this.setState({foundBooks: []});
             }
@@ -60,10 +63,6 @@ class Search extends Component {
     /*updateQuery = (query) => {
         this.setState({ query: query.trim() })
     }*/
-    
-    clearQuery = () => {
-        this.setState({ query: '' })
-    }
     
     render() {
         const { query, foundBooks } = this.state
