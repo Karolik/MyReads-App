@@ -17,6 +17,7 @@ body, .app {
 }
 .list-books-title h1 {
   font-weight: 400;
+  font-family: 'Merienda', cursive;
   margin: 0;
   color: white;
 }
@@ -29,6 +30,11 @@ body, .app {
 .bookshelf {
   padding: 0 10px 20px;
 }
+
+.bookshelf-title {
+  font-family: 'Merienda', 'Roboto', sans-serif;
+}
+
 
 @media (min-width: 600px) {
   .bookshelf {
