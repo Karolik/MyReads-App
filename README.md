@@ -6,7 +6,7 @@ This is a bookshelf app that allows you to select and categorize books you have 
 ## Table of Contents
 
 * [Description](#description)
-* [Installation](#instalation)
+* [Installation](#instructions-for-installing-and-launching)
 * [Languages used to build the game](#languages-used-to-build-the-game)
 * [Contributing](#contributing)
 * [Authors](#authors)
@@ -30,8 +30,7 @@ You can navigate back to the main page by pressing the arrow. There you should i
 ### Important
 The search results are limited to a particular set of search terms, which you can find in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work.
 
-## Installation
-Prerequisites / Instructions for installing and launching
+## Instructions for installing and launching
 
 You need to have access to the Internet and a browser installed (preferably Google Chrome) to run this app.
 
