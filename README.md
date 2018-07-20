@@ -27,15 +27,16 @@ To open the search page, click the plus in the bottom right corner on the main p
 The search page has a text input that may be used to find books. As the value of the text input changes, the books that match that query are displayed on the page, along with a control that lets you add the book to your library.
 You can navigate back to the main page by pressing the arrow. There you should instantly see all of the selections you made on the search page.
 
-## Important
+### Important
 The search results are limited to a particular set of search terms, which you can find in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work.
 
-### Prerequisites / Instructions for installing and launching
+## Prerequisites / Instructions for installing and launching
 
 You need to have access to the Internet and a browser installed (preferably Google Chrome) to run this app.
 
-To open the application:
+To open the application: 
 
+* in a terminal, "cd" to the folder of the app,
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
