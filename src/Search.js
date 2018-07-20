@@ -34,30 +34,35 @@ class Search extends Component {
 
     /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query })       /** trim() - remove whitespace from both sides of a string */
+        this.setState({ query: query })
 
-        BooksAPI.search(query).then(foundBooks => {
-                if(query && !foundBooks.error){
-                //try{
-                    //For found books that are not on the main page, assign them the shelf "none":
-                    foundBooks.map((foundBook) => (foundBook.shelf = "none"));
-                    //For found books that are already on the main page, assign them the same shelf:
-                    foundBooks.map((foundBook) => 
-                    (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
-                    .map(libraryBook => (libraryBook.shelf = foundBook.shelf))));
-                    this.setState({foundBooks});
-                        //if(foundBooks.length === 0){
-                        //    this.clearQuery(query);}
-                        console.log(query);
-                        console.log(this.state.foundBooks);
-                        console.log(this.state.libraryBooks);
-                }
+        if(query){
+          BooksAPI.search(query).then(foundBooks => {
+            if(!foundBooks.error){
+            //try{
+                //For found books that are not on the main page, assign them the shelf "none":
+                foundBooks.map((foundBook) => (foundBook.shelf = "none"));
+                //For found books that are already on the main page, assign them the same shelf:
+                foundBooks.map((foundBook) => 
+                (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
+                .map(libraryBook => (libraryBook.shelf = foundBook.shelf))));
+                this.setState({foundBooks});
+                    //if(foundBooks.length === 0){
+                    //    this.clearQuery(query);}
+                console.log(query);
+                console.log(this.state.foundBooks);
+                console.log(this.state.libraryBooks);
+            }
             else {
                 //catch(err){
-                    this.clearQuery(query);
-                    this.setState({foundBooks: []});
+                this.clearQuery(query);
+                this.setState({foundBooks: []});
             }
-        })
+          })
+        }
+        else{
+            this.setState({foundBooks: []});
+        }
     }
 
     render() {
