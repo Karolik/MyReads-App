@@ -34,12 +34,12 @@ class Search extends Component {
 
     /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query })
+        this.setState({ query: query })       /** trim() - remove whitespace from both sides of a string */
 
         if(query){
           BooksAPI.search(query).then(foundBooks => {
-            if(!foundBooks.error){
-            //try{
+            //if(!foundBooks.error){
+            if(foundBooks.length){
                 //For found books that are not on the main page, assign them the shelf "none":
                 foundBooks.map((foundBook) => (foundBook.shelf = "none"));
                 //For found books that are already on the main page, assign them the same shelf:
@@ -47,14 +47,12 @@ class Search extends Component {
                 (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
                 .map(libraryBook => (libraryBook.shelf = foundBook.shelf))));
                 this.setState({foundBooks});
-                    //if(foundBooks.length === 0){
-                    //    this.clearQuery(query);}
+
                 console.log(query);
                 console.log(this.state.foundBooks);
                 console.log(this.state.libraryBooks);
             }
             else {
-                //catch(err){
                 this.clearQuery(query);
                 this.setState({foundBooks: []});
             }
