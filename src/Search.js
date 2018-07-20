@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Book from './Book'
-//import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
@@ -16,7 +15,7 @@ class Search extends Component {
         BooksAPI.getAll().then((libraryBooks) => {
             this.setState({libraryBooks});
         })
-      }
+    }
 
     componentDidMount() {
         this.getAllBooks()
@@ -34,7 +33,7 @@ class Search extends Component {
 
     /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query })       /** trim() - remove whitespace from both sides of a string */
+        this.setState({ query: query })
 
         if(query){
           BooksAPI.search(query).then(foundBooks => {
@@ -45,7 +44,7 @@ class Search extends Component {
                 //For found books that are already on the main page, assign them the same shelf:
                 foundBooks.map((foundBook) => 
                 (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
-                .map(libraryBook => (libraryBook.shelf = foundBook.shelf))));
+                .map(libraryBook => (foundBook.shelf = libraryBook.shelf))));
                 this.setState({foundBooks});
 
                 console.log(query);
