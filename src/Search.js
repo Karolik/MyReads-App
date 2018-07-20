@@ -37,10 +37,8 @@ class Search extends Component {
 
         BooksAPI.search(query).then(foundBooks => {
             if(!foundBooks.error) {
-            //try{
                 //For found books that are not on the main page, assign them the shelf "none":
                 foundBooks.map((foundBook) => (foundBook.shelf = "none"));
-                this.setState({foundBooks});
                 //For found books that are already on the main page, assign them the same shelf:
                 foundBooks.map((foundBook) => 
                 (this.state.libraryBooks.filter((libraryBook) => (foundBook.id === libraryBook.id))
@@ -50,7 +48,6 @@ class Search extends Component {
                     //    this.clearQuery(query);}
             }
             else {
-            //catch(err){
                 this.clearQuery(query);
                 this.setState({foundBooks: []});
             }
