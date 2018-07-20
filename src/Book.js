@@ -23,7 +23,7 @@ const Book = (props) => {
               </div>
             </div>
             <div className="book-title">{props.book.title}</div>
-            <div className="book-authors">{props.book.authors}</div>
+            <div className="book-authors">{props.book.authors ? props.book.authors.toString() : ''}</div>
           </div>
         </li>
     </div>
