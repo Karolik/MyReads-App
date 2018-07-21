@@ -33,7 +33,7 @@ class Search extends Component {
 
     /** Search the books  */
     searchBooks = (query) => {
-        this.setState({ query: query })
+        this.setState({ query })
 
         if(query){
           BooksAPI.search(query).then(foundBooks => {
